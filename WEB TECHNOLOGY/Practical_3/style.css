@@ -1,0 +1,44 @@
+
+
+
+body {
+  background-image: url("q.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+}
+
+
+.external-text {
+  color: darkblue;
+  font-size: 22px;
+  text-align: center;
+  border: 2px dashed blue;
+  padding: 10px;
+  margin: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+a:link {
+  color: blue;
+  text-decoration: none;
+}
+
+a:visited {
+  color: purple;
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+a:active {
+  color: orange;
+}
+
+a.custom1 { cursor: pointer; }
+a.custom2 { cursor: help; }
+a.custom3 { cursor: wait; }
+a.custom4 { cursor: grab; }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Demonstration</title>
+
+
+  <link rel="stylesheet" href="style.css">
+
+ 
+  <style>
+   
+    .main-heading {
+      color: blue;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+    }
+
+    .highlight-text {
+      color: darkgreen;
+      font-size: 20px;
+      font-family: Georgia, serif;
+      cursor: crosshair;
+    }
+
+    .clickable-image {
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+      border: 3px solid black;
+    }
+  </style>
+</head>
+<body>
+ 
+  <h1 style="color: red; text-align: center; font-family: Arial, sans-serif;">
+    Welcome to My Website (Inline CSS Example)
+  </h1>
+
+ 
+  <p class="highlight-text">
+    This paragraph uses <b>Internal CSS</b>. It has a Georgia font, dark green text, and a crosshair cursor.
+  </p>
+
+  
+  <p class="external-text">
+    This paragraph uses <b>External CSS</b>. Styles are coming from <code>style.css</code>.
+  </p>
+
+  
+  <p>Visit <a class="custom1" href="https://www.google.com">Google</a></p>
+  <p>Visit <a class="custom2" href="https://www.youtube.com">YouTube</a></p>
+  <p>Visit <a class="custom3" href="https://www.facebook.com">Facebook</a></p>
+  <p>Visit <a class="custom4" href="https://www.instagram.com">Instagram</a></p>
+
+
+  <img class="clickable-image"
+       src="https://tse4.mm.bing.net/th/id/OIP.pRTNMibRUny2QEl5pAwqZwHaHg?rs=1&pid=ImgDetMain&o=7&rm=3"
+       alt="ycce logo">
+</body>
+</html>
