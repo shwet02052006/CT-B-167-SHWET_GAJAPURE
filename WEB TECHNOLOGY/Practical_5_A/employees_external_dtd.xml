@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML file demonstrating External DTD for Employee Information -->
+<!DOCTYPE employees SYSTEM "employee.dtd">
+
+<employees>
+    <employee id="EMP006" status="active">
+        <empId>106</empId>
+        <empName>Lisa Anderson</empName>
+        <department>Sales</department>
+        <designation>Sales Manager</designation>
+        <email>lisa.anderson@company.com</email>
+        <salary>72000</salary>
+    </employee>
+    
+    <employee id="EMP007" status="active">
+        <empId>107</empId>
+        <empName>Robert Garcia</empName>
+        <department>Operations</department>
+        <designation>Operations Coordinator</designation>
+        <email>robert.garcia@company.com</email>
+        <salary>48000</salary>
+    </employee>
+    
+    <employee id="EMP008" status="inactive">
+        <empId>108</empId>
+        <empName>Jennifer Martinez</empName>
+        <department>Customer Service</department>
+        <designation>Customer Support Representative</designation>
+        <email>jennifer.martinez@company.com</email>
+        <salary>42000</salary>
+    </employee>
+    
+    <employee id="EMP009" status="active">
+        <empId>109</empId>
+        <empName>Christopher Lee</empName>
+        <department>Research and Development</department>
+        <designation>Research Scientist</designation>
+        <email>christopher.lee@company.com</email>
+        <salary>78000</salary>
+    </employee>
+    
+    <employee id="EMP010" status="active">
+        <empId>110</empId>
+        <empName>Amanda Taylor</empName>
+        <department>Quality Assurance</department>
+        <designation>QA Tester</designation>
+        <email>amanda.taylor@company.com</email>
+        <salary>55000</salary>
+    </employee>
+</employees>

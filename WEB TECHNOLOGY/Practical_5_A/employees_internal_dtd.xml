@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE root SYSTEM "file.dtd">
+<!-- XML file demonstrating Internal DTD for Employee Information -->
+<!DOCTYPE employees [
+    <!ELEMENT employees (employee+)>
+    <!ELEMENT employee (empId, empName, department, designation, email, salary)>
+    <!ELEMENT empId (#PCDATA)>
+    <!ELEMENT empName (#PCDATA)>
+    <!ELEMENT department (#PCDATA)>
+    <!ELEMENT designation (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+    <!ELEMENT salary (#PCDATA)>
+    <!ATTLIST employee id CDATA #REQUIRED>
+]>
+
+<employees>
+    <employee id="EMP001">
+        <empId>101</empId>
+        <empName>John Smith</empName>
+        <department>Information Technology</department>
+        <designation>Software Engineer</designation>
+        <email>john.smith@company.com</email>
+        <salary>75000</salary>
+    </employee>
+    
+    <employee id="EMP002">
+        <empId>102</empId>
+        <empName>Sarah Johnson</empName>
+        <department>Human Resources</department>
+        <designation>HR Manager</designation>
+        <email>sarah.johnson@company.com</email>
+        <salary>65000</salary>
+    </employee>
+    
+    <employee id="EMP003">
+        <empId>103</empId>
+        <empName>Michael Brown</empName>
+        <department>Finance</department>
+        <designation>Financial Analyst</designation>
+        <email>michael.brown@company.com</email>
+        <salary>58000</salary>
+    </employee>
+    
+    <employee id="EMP004">
+        <empId>104</empId>
+        <empName>Emily Davis</empName>
+        <department>Marketing</department>
+        <designation>Marketing Specialist</designation>
+        <email>emily.davis@company.com</email>
+        <salary>52000</salary>
+    </employee>
+    
+    <employee id="EMP005">
+        <empId>105</empId>
+        <empName>David Wilson</empName>
+        <department>Information Technology</department>
+        <designation>Senior Developer</designation>
+        <email>david.wilson@company.com</email>
+        <salary>85000</salary>
+    </employee>
+</employees>
