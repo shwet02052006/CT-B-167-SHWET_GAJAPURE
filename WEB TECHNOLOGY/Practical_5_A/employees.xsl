@@ -42,7 +42,7 @@
             <th>Email</th>
             <th>Salary</th>
           </tr>
-          <xsl:for-each select="employees/employee">
+          <xsl:for-each select="employees_internal_dtd/employee">
             <tr>
               <td><xsl:value-of select="empId"/></td>
               <td><xsl:value-of select="empName"/></td>
