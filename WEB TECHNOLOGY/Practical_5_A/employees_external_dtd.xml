@@ -1,51 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- XML file demonstrating External DTD for Employee Information -->
-<!DOCTYPE employees SYSTEM "employee.dtd">
+<?xml-stylesheet type="text/css" href="employees.css"?>
+
+
+<!-- XML file demonstrating Internal DTD for Employee Information -->
+<!-- <?xml-stylesheet type="text/xsl" href="employees.xsl"?> -->
+<!DOCTYPE employees [
+    <!ELEMENT employees (employee+)>
+    <!ELEMENT employee (empId, empName, department, designation, email, salary)>
+    <!ELEMENT empId (#PCDATA)>
+    <!ELEMENT empName (#PCDATA)>
+    <!ELEMENT department (#PCDATA)>
+    <!ELEMENT designation (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+    <!ELEMENT salary (#PCDATA)>
+    <!ATTLIST employee id CDATA #REQUIRED>
+]>
 
 <employees>
-    <employee id="EMP006" status="active">
-        <empId>106</empId>
-        <empName>Lisa Anderson</empName>
-        <department>Sales</department>
-        <designation>Sales Manager</designation>
-        <email>lisa.anderson@company.com</email>
-        <salary>72000</salary>
+    <employee id="EMP001">
+        <empId>101</empId>
+        <empName>John Smith</empName>
+        <department>Information Technology</department>
+        <designation>Software Engineer</designation>
+        <email>john.smith@company.com</email>
+        <salary>75000</salary>
     </employee>
     
-    <employee id="EMP007" status="active">
-        <empId>107</empId>
-        <empName>Robert Garcia</empName>
-        <department>Operations</department>
-        <designation>Operations Coordinator</designation>
-        <email>robert.garcia@company.com</email>
-        <salary>48000</salary>
+    <employee id="EMP002">
+        <empId>102</empId>
+        <empName>Sarah Johnson</empName>
+        <department>Human Resources</department>
+        <designation>HR Manager</designation>
+        <email>sarah.johnson@company.com</email>
+        <salary>65000</salary>
     </employee>
     
-    <employee id="EMP008" status="inactive">
-        <empId>108</empId>
-        <empName>Jennifer Martinez</empName>
-        <department>Customer Service</department>
-        <designation>Customer Support Representative</designation>
-        <email>jennifer.martinez@company.com</email>
-        <salary>42000</salary>
+    <employee id="EMP003">
+        <empId>103</empId>
+        <empName>Michael Brown</empName>
+        <department>Finance</department>
+        <designation>Financial Analyst</designation>
+        <email>michael.brown@company.com</email>
+        <salary>58000</salary>
     </employee>
     
-    <employee id="EMP009" status="active">
-        <empId>109</empId>
-        <empName>Christopher Lee</empName>
-        <department>Research and Development</department>
-        <designation>Research Scientist</designation>
-        <email>christopher.lee@company.com</email>
-        <salary>78000</salary>
+    <employee id="EMP004">
+        <empId>104</empId>
+        <empName>Emily Davis</empName>
+        <department>Marketing</department>
+        <designation>Marketing Specialist</designation>
+        <email>emily.davis@company.com</email>
+        <salary>52000</salary>
     </employee>
     
-    <employee id="EMP010" status="active">
-        <empId>110</empId>
-        <empName>Amanda Taylor</empName>
-        <department>Quality Assurance</department>
-        <designation>QA Tester</designation>
-        <email>amanda.taylor@company.com</email>
-        <salary>55000</salary>
+    <employee id="EMP005">
+        <empId>105</empId>
+        <empName>David Wilson</empName>
+        <department>Information Technology</department>
+        <designation>Senior Developer</designation>
+        <email>david.wilson@company.com</email>
+        <salary>85000</salary>
     </employee>
 </employees>

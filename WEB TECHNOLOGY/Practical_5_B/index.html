@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee DOM Example</title>
+</head>
+<body>
+  <h2>Second Employee Information</h2>
+  <div id="output"></div>
+
+  <script>
+    // Load the XML file
+    fetch("employees.xml")
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, "application/xml");
+
+        // Get all <employee> nodes
+        const employees = xmlDoc.getElementsByTagName("employee");
+
+        // Access the second employee (index 1)
+        const secondEmployee = employees[1];
+
+        // Extract data
+        const id = secondEmployee.getElementsByTagName("id")[0].textContent;
+        const name = secondEmployee.getElementsByTagName("name")[0].textContent;
+        const dept = secondEmployee.getElementsByTagName("department")[0].textContent;
+        const salary = secondEmployee.getElementsByTagName("salary")[0].textContent;
+
+        // Show on page
+        document.getElementById("output").innerHTML =
+          `<p><strong>ID:</strong> ${id}</p>
+           <p><strong>Name:</strong> ${name}</p>
+           <p><strong>Department:</strong> ${dept}</p>
+           <p><strong>Salary:</strong> ${salary}</p>`;
+      })
+      .catch(error => console.error("Error loading XML:", error));
+  </script>
+</body>
+</html>
