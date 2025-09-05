@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="style.css"?>
+<!DOCTYPE employees SYSTEM "emp.dtd">
+<employees>
+	<employee>
+		<id>1</id>
+		<name>Riya Chawla</name>
+		<department>Engineering</department>
+		<designation>Software Engineer</designation>
+		<email>riya.chawla@example.com</email>
+		<salary>65000</salary>
+	</employee>
+	<employee>
+		<id>2</id>
+		<name>Samar Pradhan</name>
+		<department>Marketing</department>
+		<designation>Analyst</designation>
+		<email>samar.pradhan@example.com</email>
+		<salary>52000</salary>
+	</employee>
+	<employee>
+		<id>3</id>
+		<name>Tanya Menon</name>
+		<department>Finance</department>
+		<designation>Accountant</designation>
+		<email>tanya.menon@example.com</email>
+		<salary>58000</salary>
+	</employee>
+	<employee>
+		<id>4</id>
+		<name>Karan Thakur</name>
+		<department>Operations</department>
+		<designation>Logistics Coordinator</designation>
+		<email>karan.thakur@example.com</email>
+		<salary>57000</salary>
+	</employee>
+	<employee>
+		<id>5</id>
+		<name>Leena Bhosale</name>
+		<department>Design</department>
+		<designation>Graphic Designer</designation>
+		<email>leena.bhosale@example.com</email>
+		<salary>50000</salary>
+	</employee>
+  
+</employees>

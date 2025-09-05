@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="style.css"?>
+<!DOCTYPE employees [
+  <!ELEMENT employees (employee+)>
+  <!ELEMENT employee (id, name, department, designation, email, salary)>
+  <!ELEMENT id (#PCDATA)>
+  <!ELEMENT name (#PCDATA)>
+  <!ELEMENT department (#PCDATA)>
+  <!ELEMENT designation (#PCDATA)>
+  <!ELEMENT email (#PCDATA)>
+  <!ELEMENT salary (#PCDATA)>
+]>
+<employees>
+  <employee>
+    <id>201</id>
+    <name>Mira Kulkarni</name>
+    <department>Research</department>
+    <designation>Data Scientist</designation>
+    <email>mira.kulkarni@example.com</email>
+    <salary>90000</salary>
+  </employee>
+  <employee>
+    <id>202</id>
+    <name>Nikhil D'Souza</name>
+    <department>IT</department>
+    <designation>Network Engineer</designation>
+    <email>nikhil.dsouza@example.com</email>
+    <salary>62000</salary>
+  </employee>
+  <employee>
+    <id>203</id>
+    <name>Ojaswi Rane</name>
+    <department>Legal</department>
+    <designation>Compliance Officer</designation>
+    <email>ojaswi.rane@example.com</email>
+    <salary>71000</salary>
+  </employee>
+  <employee>
+    <id>204</id>
+    <name>Pranav Iyer</name>
+    <department>Product</department>
+    <designation>Product Manager</designation>
+    <email>pranav.iyer@example.com</email>
+    <salary>98000</salary>
+  </employee>
+  <employee>
+    <id>205</id>
+    <name>Quratulain Naqvi</name>
+    <department>Customer Success</department>
+    <designation>Success Manager</designation>
+    <email>q.naqvi@example.com</email>
+    <salary>75000</salary>
+  </employee>
+</employees>
