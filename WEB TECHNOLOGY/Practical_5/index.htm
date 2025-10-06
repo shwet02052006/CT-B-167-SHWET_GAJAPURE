@@ -1,53 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xml+dom</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background: #f9f9f9;
-        }
-        h1 {
-            color: #333;
-        }
-        #showBtn {
-            padding: 8px 16px;
-            font-size: 16px;
-            background: #0078d4;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        #showBtn:hover {
-            background: #005fa3;
-        }
-        #output {
-            margin-top: 24px;
-            padding: 16px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-        #output p {
-            margin: 8px 0;
-        }
-        strong {
-            color: #0078d4;
-        }
-    </style>
+    <title>XML Document</title>
 </head>
 <body>
     <h1>Second employee info (from external DTD XML)</h1>
     <button id="showBtn">Show 2nd Employee</button>
     <div id="output"></div>
+
     <script>
         document.getElementById('showBtn').addEventListener('click', () => {
             fetch('employee-externel-dtd.xml')
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, 'application/xml');
+                    const emps = xml.getElementsByTagName('employee');
+                    const out = document.getElementById('output');
+                    if (emps.length < 2) {
+                        out.textContent = 'No second employee found.';
+                        return;
+                    }
+                    const emp = emps[1];
+                    const pick = tag => emp.getElementsByTagName(tag)[0]?.textContent || '';
+                    out.innerHTML = `
+                        <p><strong>ID:</strong> ${pick('id')}</p>
+                        <p><strong>Name:</strong> ${pick('name')}</p>
+                        <p><strong>Department:</strong> ${pick('department')}</p>
+                        <p><strong>Designation:</strong> ${pick('designation')}</p>
+                        <p><strong>Email:</strong> ${pick('email')}</p>
+                        <p><strong>Salary:</strong> ${pick('salary')}</p>
+                    `;
+                })
+                .catch(() => {
+                    document.getElementById('output').textContent = 'Failed to load XML.';
+                });
+        });
+    </script>
+</body>
+</html>
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
