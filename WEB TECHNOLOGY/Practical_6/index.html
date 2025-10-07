@@ -1,48 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CD Catalog - XML Parsing with JavaScript</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CD Catalog Viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: 600;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        background-color: #4CAF50;
+      }
+      td {
+        border: none;
+        padding: 10px;
+        position: relative;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2 style="text-align:center;">CD Catalog</h2>
-  <button onclick="loadXMLDoc()">Get CD Catalog</button>
-  <div id="cdTable"></div>
+
+  <h1>🎵 CD Catalog</h1>
+  <table id="cdTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Country</th>
+        <th>Company</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
   <script>
-    function loadXMLDoc() {
-      const xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          cdDetails(this);
+    fetch('cd_catalog.xml')
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, 'application/xml');
+        const cds = xmlDoc.getElementsByTagName('CD');
+        const tableBody = document.querySelector('#cdTable tbody');
+
+        for (let i = 0; i < cds.length; i++) {
+          const title = cds[i].getElementsByTagName('TITLE')[0]?.textContent || '';
+          const artist = cds[i].getElementsByTagName('ARTIST')[0]?.textContent || '';
+          const country = cds[i].getElementsByTagName('COUNTRY')[0]?.textContent || '';
+          const company = cds[i].getElementsByTagName('COMPANY')[0]?.textContent || '';
+          const price = cds[i].getElementsByTagName('PRICE')[0]?.textContent || '';
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td data-label="Title">${title}</td>
+            <td data-label="Artist">${artist}</td>
+            <td data-label="Country">${country}</td>
+            <td data-label="Company">${company}</td>
+            <td data-label="Price">${price}</td>
+          `;
+          tableBody.appendChild(row);
         }
-      };
-      // XML file must be in the same folder
-      xhttp.open("GET", "cd_catalog.xml", true);
-      xhttp.send();
-    }
-
-    function cdDetails(xml) {
-      const xmlDoc = xml.responseXML;
-      const cds = xmlDoc.getElementsByTagName("CD");
-
-      let table = "<table><tr><th>Title</th><th>Artist</th><th>Country</th><th>Company</th><th>Price</th><th>Year</th></tr>";
-
-      for (let i = 0; i < cds.length; i++) {
-        table += "<tr>" +
-          "<td>" + cds[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue + "</td>" +
-          "<td>" + cds[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue + "</td>" +
-          "<td>" + cds[i].getElementsByTagName("COUNTRY")[0].childNodes[0].nodeValue + "</td>" +
-          "<td>" + cds[i].getElementsByTagName("COMPANY")[0].childNodes[0].nodeValue + "</td>" +
-          "<td>" + cds[i].getElementsByTagName("PRICE")[0].childNodes[0].nodeValue + "</td>" +
-          "<td>" + cds[i].getElementsByTagName("YEAR")[0].childNodes[0].nodeValue + "</td>" +
-          "</tr>";
-      }
-
-      table += "</table>";
-      document.getElementById("cdTable").innerHTML = table;
-    }
+      })
+      .catch(error => console.error('Error loading XML:', error));
   </script>
+
 </body>
 </html>
