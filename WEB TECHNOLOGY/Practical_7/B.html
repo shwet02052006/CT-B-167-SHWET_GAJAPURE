@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dialogue Boxes</title>
+  <style>
+    body {
+      background-color: #0cc225; /* Light lavender */
+      font-family: Verdana, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+  <h2>Dialogue Boxes in JavaScript</h2>
+  <script>
+    alert("This is an Alert Box!");
+
+    let name = prompt("Enter your name:");
+    alert("Hello, " + name + "!");
+
+    let confirmMsg = confirm("Do you like JavaScript?");
+    if (confirmMsg) {
+      alert("That's great!");
+    } else {
+      alert("You will like it soon!");
+    }
+  </script>
+</body>
+</html>

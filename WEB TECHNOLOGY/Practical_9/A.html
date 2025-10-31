@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admission Registration</title>
+</head>
+<body>
+  <h2>Admission Form</h2>
+  <form onsubmit="return validateForm()">
+    Name: <input type="text" id="name"><br><br>
+    Email: <input type="text" id="email"><br><br>
+    Age: <input type="number" id="age"><br><br>
+    Course:
+    <select id="course">
+      <option value="">--Select--</option>
+      <option value="science">Science</option>
+      <option value="arts">Arts</option>
+      <option value="commerce">Commerce</option>
+    </select><br><br>
+    <input type="submit" value="Register">
+  </form>
+
+  <script>
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const age = parseInt(document.getElementById("age").value);
+      const course = document.getElementById("course").value;
+
+      if (name === "") {
+        alert("Name is required.");
+        return false;
+      }
+
+      if (!email.includes("@") || !email.includes(".")) {
+        alert("Enter a valid email.");
+        return false;
+      }
+
+      if (isNaN(age) || age < 18) {
+        alert("Age must be a number and at least 18.");
+        return false;
+      }
+
+      if (course === "") {
+        alert("Please select a course.");
+        return false;
+      }
+
+      alert("Form submitted successfully!");
+      return true;
+    }
+  </script>
+</body>
+</html>

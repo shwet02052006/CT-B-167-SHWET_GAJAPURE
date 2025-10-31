@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basic Task App</title>
+  <style>
+    *{box-sizing:border-box}
+    body{font-family:Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f7fbff;color:#0b1220}
+    .wrap{max-width:760px;margin:24px auto;background:#fff;border:1px solid #e6eef9;border-radius:8px;box-shadow:0 6px 18px rgba(12,40,80,.06);padding:16px}
+    h1{margin:0 0 12px 0;font-size:1.4rem}
+    label{display:block;margin:10px 0 6px}
+    input[type=text],input[type=date],select,textarea{width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px}
+    .row{display:flex;gap:10px}
+    .row > *{flex:1}
+    .btns{display:flex;gap:8px;margin-top:10px}
+    button{padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;background:#f1f5f9;cursor:pointer}
+    button.primary{background:#2563eb;color:#fff;border-color:#2563eb}
+    .error{color:#b91c1c;margin-top:6px}
+    ul{list-style:none;padding:0;margin:12px 0 0}
+    li{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #e6eef9;border-radius:8px;margin:8px 0;background:#f8fafc}
+    .meta{color:#546e7a;display:flex;gap:8px;font-size:.9rem}
+    .tools button{margin-left:6px}
+    details{margin-top:6px}
+  textarea{resize:vertical}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Basic Task App</h1>
+
+    <section>
+      <label>Title
+        <input id="title" type="text" placeholder="e.g. Buy milk">
+      </label>
+      <div class="row">
+        <label>Status
+          <select id="status">
+            <option value="todo">To Do</option>
+            <option value="in-progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </label>
+        <label>Due Date
+          <input id="dueDate" type="date">
+        </label>
+      </div>
+      <label>Details
+        <textarea id="details" rows="3" placeholder="Optional"></textarea>
+      </label>
+      <div class="btns">
+        <button id="save" class="primary">Save</button>
+        <button id="reset" type="button">Reset</button>
+      </div>
+      <div id="err" class="error" aria-live="polite"></div>
+      <input id="taskId" type="hidden">
+    </section>
+
+    <section>
+      <h2 style="margin:16px 0 8px">Tasks</h2>
+      <ul id="list"></ul>
+    </section>
+    
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const API = {
+      async list(){
+        const r = await fetch('/api/tasks'); if(!r.ok) throw new Error('Failed to load');
+        return r.json();
+      },
+      async create(t){
+        const r = await fetch('/api/tasks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(t)});
+        if(!r.ok) throw new Error((await r.json()).errors?.join(' | ')||'Create failed');
+        return r.json();
+      },
+      async update(id,t){
+        const r = await fetch(`/api/tasks/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(t)});
+        if(!r.ok) throw new Error((await r.json()).errors?.join(' | ')||'Update failed');
+        return r.json();
+      },
+      async remove(id){
+        const r = await fetch(`/api/tasks/${id}`,{method:'DELETE'}); if(!r.ok) throw new Error('Delete failed');
+      }
+    };
+    let TASKS = [];
+
+    function clearForm(){
+      $('#taskId').value = '';
+      $('#title').value = '';
+      $('#status').value = 'todo';
+      $('#dueDate').value = '';
+      $('#details').value = '';
+      $('#err').textContent = '';
+    }
+
+    function getForm(){
+      return {
+        id: $('#taskId').value || null,
+        title: $('#title').value.trim(),
+        status: $('#status').value,
+        dueDate: $('#dueDate').value || null,
+        details: $('#details').value.trim()
+      };
+    }
+
+    function validate(t){
+      const e = [];
+      if(!t.title) e.push('Title is required');
+      if(t.title && t.title.length > 140) e.push('Title must be <= 140 chars');
+      if(!['todo','in-progress','done'].includes(t.status)) e.push('Invalid status');
+      if(t.dueDate){ const d = new Date(t.dueDate); if(Number.isNaN(d.getTime())) e.push('Invalid date'); }
+      return e;
+    }
+
+    function render(){
+      const ul = $('#list');
+      ul.innerHTML = '';
+      TASKS.forEach(t => {
+        const li = document.createElement('li');
+        const left = document.createElement('div');
+        const right = document.createElement('div');
+        const title = document.createElement('div');
+        const meta = document.createElement('div');
+        title.textContent = t.title;
+        meta.className = 'meta';
+        meta.textContent = `#${t.id} • ${t.status} • ${t.dueDate ? ('due ' + new Date(t.dueDate).toLocaleDateString()) : 'no due'}`;
+        left.appendChild(title);
+        left.appendChild(meta);
+        if(t.details){
+          const det = document.createElement('details');
+          const sum = document.createElement('summary');
+          sum.textContent = 'Details';
+          const p = document.createElement('div');
+          p.textContent = t.details;
+          det.appendChild(sum); det.appendChild(p);
+          left.appendChild(det);
+        }
+        right.className = 'tools';
+        const eBtn = document.createElement('button'); eBtn.textContent='Edit'; eBtn.onclick=()=>editTask(t.id);
+        const dBtn = document.createElement('button'); dBtn.textContent='Delete'; dBtn.onclick=()=>delTask(t.id);
+        right.appendChild(eBtn); right.appendChild(dBtn);
+        li.appendChild(left); li.appendChild(right);
+        ul.appendChild(li);
+      });
+    }
+
+    function saveTask(){
+      const form = getForm();
+      const errors = validate(form);
+      if(errors.length){ $('#err').textContent = errors.join(' | '); return; }
+      $('#err').textContent = 'Saving...';
+      const payload = { title: form.title, status: form.status, dueDate: form.dueDate, details: form.details };
+      const p = form.id ? API.update(form.id, payload) : API.create(payload);
+      p.then(()=>refresh()).then(()=>{ clearForm(); }).catch(e=>$('#err').textContent = e.message || String(e));
+    }
+
+    function editTask(id){
+      const t = TASKS.find(x=>String(x.id)===String(id));
+      if(!t) return;
+      $('#taskId').value = t.id;
+      $('#title').value = t.title;
+      $('#status').value = t.status;
+      $('#dueDate').value = t.dueDate ? new Date(t.dueDate).toISOString().slice(0,10) : '';
+      $('#details').value = t.details || '';
+      $('#err').textContent = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function delTask(id){
+      if(!confirm('Delete this task?')) return;
+      $('#err').textContent = 'Deleting...';
+      API.remove(id).then(()=>refresh()).catch(e=>$('#err').textContent = e.message || String(e));
+    }
+
+    async function refresh(){
+      try{
+        TASKS = await API.list();
+        $('#err').textContent = '';
+        render();
+      }catch(e){
+        $('#err').textContent = e.message || 'Failed to load tasks';
+      }
+    }
+
+    document.getElementById('save').addEventListener('click', saveTask);
+    document.getElementById('reset').addEventListener('click', clearForm);
+    refresh();
+  </script>
+</body>
+</html>

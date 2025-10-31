@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loop Demo</title>
+</head>
+<body>
+  <h2>JavaScript Loop Demo</h2>
+  <p id="output"></p>
+
+  <script>
+    let result = "Using while loop:<br>";
+    let i = 1;
+    while (i <= 5) {
+      result += i + "<br>";
+      i++;
+    }
+
+    result += "Using for loop:<br>";
+    for (let j = 6; j <= 10; j++) {
+      result += j + "<br>";
+    }
+
+    document.getElementById("output").innerHTML = result;
+  </script>
+</body>
+</html>
