@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple, accessible task manager with filters and local storage.">
+    <title>Simple Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container" id="main">
+        <h1>My Task Manager</h1>
+
+        <form id="taskForm" class="input-section" novalidate>
+            <label for="taskInput" class="sr-only">New task</label>
+            <input type="text" id="taskInput" name="task" placeholder="Enter a new task..." autocomplete="off" required>
+            <button id="addTaskBtn" type="submit">Add Task</button>
+        </form>
+
+        <div class="filters" role="group" aria-label="Filter tasks">
+            <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-filter="pending" aria-pressed="false">Pending</button>
+            <button class="filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+        </div>
+
+        <ul id="taskList" class="task-list" aria-live="polite" aria-relevant="additions removals">
+        </ul>
+
+        <div class="stats">
+            <span id="taskCount" aria-live="polite">Total tasks: 0</span>
+        </div>
+
+        <p id="liveStatus" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+        <noscript>
+            JavaScript is required to use this app. Please enable JavaScript in your browser.
+        </noscript>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
